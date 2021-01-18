@@ -11,13 +11,8 @@
 
     <h1>Main Page</h1>
 
-    <label>Username: ${user.getName()}</label> <br/>
-    <label>Email: ${user.getEmail()}</label> <br/>
-    <label>Password: ${user.getPassword()}</label> <br/>   
-    <br/>
-    <label>Word: ${vocab.getWord()}</label> <br/>
-    <label>Reading: ${vocab.getReading()}</label> <br/>
-    <label>Meanings: ${vocab.getMeanings()}</label> <br/> 
+    <a href="<%=request.getContextPath()%>/lesson">Lessons</a>
+    <a href="<%=request.getContextPath()%>/review">Reviews</a>
 
 
 

@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,17 +18,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class VocabDto {
 
-    private String id;
-    private User user;
-    private Integer number;
-    private String word;
-    private Level level;
-    private Boolean learned;
-    private Date nextDate;
-    private Integer streak;
+    public String id;
+    public User user;
+    public Integer number;
+    public String word;
+    public Level level;
+    public Boolean learned;
+    public Timestamp nextDate;
+    public Integer streak;
 
-    private String reading;
-    private String[] meanings;
+    public String reading;
+    public String[] meanings;
 
     public VocabDto() {
     }
@@ -53,7 +53,6 @@ public class VocabDto {
 		con.setReadTimeout(5000);
 
 		int status = con.getResponseCode();
-		System.out.println(status);
 
 		BufferedReader in = new BufferedReader(
 		new InputStreamReader(con.getInputStream()));
@@ -64,15 +63,11 @@ public class VocabDto {
 		}
 
         in.close();
-        
-        System.out.println(vocab);
 
 		Map<String,Object> result = new ObjectMapper().readValue(content.toString(), HashMap.class);
 		
 		String reading = (String) ((ArrayList<Map<String, ArrayList<Map<String, Object>>>>) result.get("data")).get(0).get("japanese").get(0).get("reading");
         ArrayList<String> meanings = (ArrayList<String>) ((ArrayList<Map<String, ArrayList<Map<String, Object>>>>) result.get("data")).get(0).get("senses").get(0).get("english_definitions");
-        System.out.println(reading);
-        System.out.println(meanings);
         this.reading = reading;
         Iterator<String> iterator = meanings.stream().iterator();
         this.meanings = new String[meanings.size()];
@@ -107,7 +102,7 @@ public class VocabDto {
 		return chars.toString();
 	}
 
-    public VocabDto(String id, User user, Integer number, String word, Level level, Boolean learned, Date nextDate, Integer streak, String reading, String[] meanings) {
+    public VocabDto(String id, User user, Integer number, String word, Level level, Boolean learned, Timestamp nextDate, Integer streak, String reading, String[] meanings) {
         this.id = id;
         this.user = user;
         this.number = number;
@@ -172,11 +167,11 @@ public class VocabDto {
         this.learned = learned;
     }
 
-    public Date getNextDate() {
+    public Timestamp getNextDate() {
         return this.nextDate;
     }
 
-    public void setNextDate(Date nextDate) {
+    public void setNextDate(Timestamp nextDate) {
         this.nextDate = nextDate;
     }
 
@@ -234,7 +229,7 @@ public class VocabDto {
         return this;
     }
 
-    public VocabDto nextDate(Date nextDate) {
+    public VocabDto nextDate(Timestamp nextDate) {
         setNextDate(nextDate);
         return this;
     }

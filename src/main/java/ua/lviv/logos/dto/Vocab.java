@@ -2,7 +2,7 @@ package ua.lviv.logos.dto;
 
 import java.util.Objects;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,7 +19,7 @@ public class Vocab {
     private String word;
     private Level level;
     private Boolean learned;
-    private Date nextDate;
+    private Timestamp nextDate;
     private Integer streak;
 
 
@@ -27,7 +27,7 @@ public class Vocab {
     public Vocab() {
     }
 
-    public Vocab(User user, Integer number, String word, Level level, Boolean learned, Date nextDate, Integer streak) {
+    public Vocab(User user, Integer number, String word, Level level, Boolean learned, Timestamp nextDate, Integer streak) {
         this.user = user;
         this.number = number;
         this.word = word;
@@ -89,11 +89,11 @@ public class Vocab {
         this.learned = learned;
     }
 
-    public Date getNextDate() {
+    public Timestamp getNextDate() {
         return this.nextDate;
     }
 
-    public void setNextDate(Date nextDate) {
+    public void setNextDate(Timestamp nextDate) {
         this.nextDate = nextDate;
     }
 
@@ -135,7 +135,7 @@ public class Vocab {
         return this;
     }
 
-    public Vocab nextDate(Date nextDate) {
+    public Vocab nextDate(Timestamp nextDate) {
         setNextDate(nextDate);
         return this;
     }

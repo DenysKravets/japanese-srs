@@ -2,9 +2,11 @@ package ua.lviv.logos.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.lviv.logos.dao.VocabDao;
 import ua.lviv.logos.dto.User;
@@ -21,6 +23,10 @@ public class VocabServiceImpl {
         vocabDao.save(vocab);
     }
 
+    public void update(Vocab vocab) {
+        vocabDao.save(vocab);
+    }
+
     public Iterable<Vocab> findAll() {
         return vocabDao.findAll();
     }
@@ -33,5 +39,15 @@ public class VocabServiceImpl {
         vocabs.stream().forEach(vocab -> vocab.setId(UUID.randomUUID().toString()));
         vocabDao.saveAll(vocabs);
     }
+
+    @Transactional
+    public Stream<Vocab> findByUser(User user) {
+        return vocabDao.findByUser(user);
+    }
+
+    public Vocab findById(String id) {
+        return vocabDao.findById(id).get();
+    }
+
 
 }
