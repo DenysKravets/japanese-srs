@@ -49,6 +49,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .clearAuthentication(true)
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .logoutSuccessUrl("/login").permitAll();
-		
-	}
+
+        http.requiresChannel()
+            .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+            .requiresSecure();
+    }
 }
