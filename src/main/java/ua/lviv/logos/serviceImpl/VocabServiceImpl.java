@@ -1,5 +1,6 @@
 package ua.lviv.logos.serviceImpl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -47,6 +48,11 @@ public class VocabServiceImpl {
 
     public Vocab findById(String id) {
         return vocabDao.findById(id).get();
+    }
+
+    @Transactional
+    public Stream<Vocab> findByNextDateLessThan(Timestamp timestamp) {
+        return vocabDao.findByNextDateLessThanAndLearned(timestamp, true);
     }
 
 

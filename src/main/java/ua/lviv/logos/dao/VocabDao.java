@@ -1,5 +1,6 @@
 package ua.lviv.logos.dao;
 
+import java.sql.Timestamp;
 import java.util.stream.Stream;
 
 import org.springframework.data.repository.CrudRepository;
@@ -12,4 +13,6 @@ public interface VocabDao extends CrudRepository<Vocab, String> {
     public Vocab findByUserAndNumber(User user, Integer number);
     @Transactional
     public Stream<Vocab> findByUser(User user);
+    @Transactional
+    public Stream<Vocab> findByNextDateLessThanAndLearned(Timestamp timestamp, boolean learned);
 }

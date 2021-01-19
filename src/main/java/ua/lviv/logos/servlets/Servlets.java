@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.xdevapi.JsonArray;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
@@ -88,8 +89,40 @@ public class Servlets {
 		return chars.toString();
 	}
 
+	@PostMapping("/review/vocab/done")
+	public ModelAndView reviewVocabDone(HttpServletRequest request, HttpServletResponse response) {
+
+		System.out.println(request.getParameter("isSuccess"));
+		System.out.println(vocabService.findById(request.getParameter("id")));
+
+		return null;
+	}
+
+	@GetMapping("/review")
+	public ModelAndView review(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		JSONArray array = new JSONArray();
+		srsService.getReviews().stream().forEach(vocab -> {
+			JSONArray jsonMeanings = new JSONArray();
+			for(int i = 0; i < vocab.meanings.length; i++) {
+				jsonMeanings.put(vocab.meanings[i]);
+			}
+			JSONObject object = new JSONObject();
+			object.put("id", vocab.id);
+			object.put("user_id", vocab.user.getId());
+			object.put("word", vocab.word);
+			object.put("reading", vocab.reading);
+			object.put("meanings", jsonMeanings);
+			array.put(object);
+		});
+
+		request.setAttribute("reviews", array.toString());
+		System.out.println(array.toString());
+
+		return new ModelAndView("review");
+	}
+
 	@PostMapping("/lesson/done")
-	@Transactional
 	public ModelAndView lessonDone(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		BufferedReader reader = request.getReader();
