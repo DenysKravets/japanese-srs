@@ -51,8 +51,8 @@ public class VocabServiceImpl {
     }
 
     @Transactional
-    public Stream<Vocab> findByNextDateLessThan(Timestamp timestamp) {
-        return vocabDao.findByNextDateLessThanAndLearned(timestamp, true);
+    public Stream<Vocab> findByNextDateLessThanAndUser(Timestamp timestamp, User user) {
+        return vocabDao.findByNextDateLessThanAndLearnedAndUser(timestamp, true, user);
     }
 
 

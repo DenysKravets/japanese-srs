@@ -36,11 +36,6 @@ $(window).on("load", function() {
     
     $("#button").on("click", function(){
 
-        if(vocab_counter == document.review_data.length - 1) {
-            alert("Nice job, " + document.review_data.length + " vocabs done! Returning to Main Page.");
-            window.location.href = "http://localhost:8080/index";
-        }
-
         var userReading = $("#reading").val();
         var userMeaning = $("#meaning").val();
         console.log(userMeaning, userReading, word, meanings, reading);
@@ -55,6 +50,11 @@ $(window).on("load", function() {
         }
         if(readingCorrect && meaningCorrect) {
             sendIsSuccess(id, true);
+            if(vocab_counter == document.review_data.length) {
+                alert("Nice job, " + document.review_data.length + " vocabs done! Returning to Main Page.");
+                window.location.href = "http://localhost:8080/index";
+                return null;
+            }
             change_vocab();
             $("#reading").focus();
             $("#reading").val("");

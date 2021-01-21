@@ -86,9 +86,13 @@ public class Servlets {
 	@PostMapping("/review/vocab/done")
 	public ModelAndView reviewVocabDone(HttpServletRequest request, HttpServletResponse response) {
 
-		System.out.println(request.getParameter("isSuccess"));
-		System.out.println(vocabService.findById(request.getParameter("id")));
-
+		String isSuccess = request.getParameter("isSuccess");
+		boolean progress = false;
+		Vocab vocab = vocabService.findById(request.getParameter("id"));
+		if(isSuccess.equals("true")) {
+			progress = true;
+		}
+		srsService.progressVocab(vocab, progress);
 		return null;
 	}
 
@@ -96,7 +100,7 @@ public class Servlets {
 	public ModelAndView review(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		JSONArray array = new JSONArray();
-		srsService.getReviews().stream().forEach(vocab -> {
+		srsService.getReviews(userService.findByEmail(request.getUserPrincipal().getName())).stream().forEach(vocab -> {
 			JSONArray jsonMeanings = new JSONArray();
 			for(int i = 0; i < vocab.meanings.length; i++) {
 				jsonMeanings.put(vocab.meanings[i]);
@@ -141,7 +145,7 @@ public class Servlets {
 	@Transactional
 	public String lesson(HttpServletRequest request, HttpServletResponse response) throws IOException{
 
-		int lessonSize = 5;
+		int lessonSize = 2;
 		ArrayList<VocabDto> vocabToLearn = new ArrayList<>();
 
 		User user = userService.findByEmail(request.getUserPrincipal().getName());

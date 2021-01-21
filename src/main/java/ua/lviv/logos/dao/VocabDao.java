@@ -14,5 +14,5 @@ public interface VocabDao extends CrudRepository<Vocab, String> {
     @Transactional
     public Stream<Vocab> findByUser(User user);
     @Transactional
-    public Stream<Vocab> findByNextDateLessThanAndLearned(Timestamp timestamp, boolean learned);
+    public Stream<Vocab> findByNextDateLessThanAndLearnedAndUser(Timestamp timestamp, boolean learned, User user);
 }
