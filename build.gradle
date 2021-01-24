@@ -44,7 +44,7 @@ dependencies {
 	compile group: 'org.json', name: 'json', version: '20160810'
 
 
-
+	compile 'com.github.jsimone:webapp-runner:8.5.11.3'
 
 
 
@@ -53,6 +53,20 @@ dependencies {
 
 
 }
+
+task stage() {
+    dependsOn clean, war
+}
+war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
+}
+
+stage.dependsOn(copyToLib)
 
 springBoot {
 	mainClass='ua.lviv.logos.LogosApplication'
