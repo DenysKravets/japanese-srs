@@ -76,7 +76,7 @@ war {
     enabled=true
 	manifest {
         attributes(
-                'Main-Class': 'src\main\java\ua\lviv\logos\LogosApplication.java'
+                'Main-Class': 'src.main.java.ua.lviv.logos.LogosApplication'
         )
     }
 }
