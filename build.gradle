@@ -5,6 +5,8 @@ plugins {
 	id 'war'
 }
 
+apply plugin: "war"
+
 group = 'ua.lviv'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -52,6 +54,16 @@ dependencies {
 
 }
 
+springBoot {
+	mainClass='ua.lviv.logos.LogosApplication'
+}
+
+war {
+    enabled=true
+}
+
 test {
 	useJUnitPlatform()
 }
+
+logger.lifecycle "war.archivePath = $war.archivePath"
