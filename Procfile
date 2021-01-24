@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/logos-0.0.1-SNAPSHOT.war
+web: java $JAVA_OPTS -cp target/classes:target/dependency/ua.lviv.logos.LogosApplication
