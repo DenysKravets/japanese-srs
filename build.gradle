@@ -74,11 +74,7 @@ springBoot {
 
 war {
     enabled=true
-	manifest {
-        attributes(
-                'Main-Class': 'ua.lviv.logos.LogosApplication'
-        )
-    }
+	
 }
 
 test {
