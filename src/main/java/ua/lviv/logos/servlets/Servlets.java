@@ -5,12 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -116,6 +119,9 @@ public class Servlets {
 
 		request.setAttribute("reviews", array.toString());
 		System.out.println(array.toString());
+		response.setCharacterEncoding("UTF-8");
+		Writer writer = response.getWriter();
+		writer.write("<script defer>document.review_data=" + array.toString() + "</script>");
 
 		return new ModelAndView("review");
 	}
@@ -201,7 +207,16 @@ public class Servlets {
 			ArrayList<Vocab> vocabs = new ArrayList<>();
 			User innerUser = userService.findByEmail(user.getEmail());
 			AtomicInteger atomicInteger = new AtomicInteger();
-			CSVReader reader = new CSVReader(new FileReader("src/main/vocab.csv"));
+			CSVReader reader = null;
+			try {
+				InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/static/vocab.csv");
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+				reader = new CSVReader(bufferedReader);
+			} catch (Exception e) {
+				System.out.println(e);
+				reader = new CSVReader(new FileReader("src/main/resources/static/vocab.csv"));
+			}
+//			CSVReader reader = new CSVReader(new FileReader("/static/vocab.csv"));
 			List<String[]> r = reader.readAll();
 			r.forEach(line -> {
 				Vocab vocab = new Vocab(

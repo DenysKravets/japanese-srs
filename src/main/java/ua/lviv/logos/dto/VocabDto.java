@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class VocabDto {
 		int status = con.getResponseCode();
 
 		BufferedReader in = new BufferedReader(
-		new InputStreamReader(con.getInputStream()));
+		new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 		String inputLine;
 		StringBuffer content = new StringBuffer();
 		while ((inputLine = in.readLine()) != null) {
